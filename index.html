@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Words Transformer</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="header-bar">
+    <h2>Words Transformer</h2>
+    <button class="menu-btn" id="modalOpenBtn" aria-label="Open filter settings panel">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Filter Configuration Real-time Modal Panel -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="modal-close-area" id="modalCloseBtn">&times;</button>
+      <h3>Configuration Toggles</h3>
+      
+      <div class="checkbox-item">
+        <input type="checkbox" id="caseToggle">
+        <label for="caseToggle">Case Sensitive Match</label>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="filterToggle">
+        <label for="filterToggle">Custom Filter</label>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="predefinedToggle">
+        <label for="predefinedToggle">Predefined Filter</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="column-box">
+      <label for="textInput">Paste Words</label>
+      <textarea id="textInput" rows="20" placeholder="Paste or type text here..."></textarea>
+      <div id="inputStats" class="stats">Total Words: 0</div>
+    </div>
+    
+    <div class="column-box">
+      <label for="filterInput">Word Filter</label>
+      <textarea id="filterInput" rows="20" placeholder="One word&#10;per line..."></textarea>
+      <div id="filterStats" class="stats">Custom Filtered: 0</div>
+    </div>
+    
+    <div class="column-box">
+      <label for="textOutput">Unique Words</label>
+      <textarea id="textOutput" rows="20" readonly placeholder="Cleaned text..."></textarea>
+      <button class="copy-btn" id="copyBtn">Copy</button>
+      <div id="outputStats" class="stats">Unique Words: 0</div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
