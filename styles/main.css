@@ -141,3 +141,59 @@ textarea[readonly] {
   font-size: 12px;
   color: #666;
 }
+
+/* Container to place the cycling button in the upper right */
+.font-cycle-container {
+  position: absolute;
+  top: 50px;
+  right: 15px;
+  z-index: 10;
+}
+
+/* Hide the radio button storage inputs completely */
+input[name="fontState"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Base style for the interactive cycle button labels */
+.font-cycle-label {
+  display: none; /* Hidden by default */
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  user-select: none;
+}
+.font-cycle-label:hover {
+  background: #f5f5f5;
+}
+
+/* Base layout setups for Textareas using a scale variable */
+.column-box textarea {
+  --text-size: 14px; /* Step 1: Default Size */
+  font-size: var(--text-size);
+}
+
+/* STATE 1: Default active -> Show the label that triggers State 2 */
+body:has(#fontState1:checked) #labelToState2 { display: block; }
+
+/* STATE 2: Large active (+2px) -> Update text scale and show label for State 3 */
+body:has(#fontState2:checked) .column-box textarea { --text-size: 16px; }
+body:has(#fontState2:checked) #labelToState3 { display: block; }
+
+/* STATE 3: Extra Large active (+4px) -> Update text scale and show label for State 1 */
+body:has(#fontState3:checked) .column-box textarea { --text-size: 18px; }
+body:has(#fontState3:checked) #labelToState1 { display: block; }
+
+/* Add this ruleset to match your external script logic */
+#copyBtn.success {
+    background-color: #f0fdf4 !important; /* Tailwind bg-green-50 */
+    color: #15803d !important;            /* Tailwind text-green-700 */
+    border-color: #bbf7d0 !important;      /* Tailwind border-green-200 */
+}

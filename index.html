@@ -1,66 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Words Transformer</title>
-  <link rel="stylesheet" href="styles/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words Transformer</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen p-4 sm:p-6">
 
-<div class="container">
-  <div class="header-bar">
-    <h2>Words Transformer</h2>
-    <button class="menu-btn" id="modalOpenBtn" aria-label="Open filter settings panel">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
+    <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
+        
+        <!-- Header Section -->
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-100 pb-4">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight text-gray-900">Words Transformer</h1>
+            </div>
+            
+            <!-- Import and Configuration Controls -->
+            <div class="flex flex-wrap items-center gap-3 text-sm">
+                <div class="flex items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200">
+                    <span class="font-medium text-gray-600 whitespace-nowrap">Import</span>
+                    <input type="file" id="fileImport" accept=".txt" class="text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-gray-200 file:text-gray-700 hover:file:bg-gray-300 cursor-pointer">
+                </div>
+                
+                <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
+                    <button id="modalOpenBtn" class="px-3 py-2 bg-gray-50 hover:bg-gray-100 font-semibold text-gray-600 transition-colors" aria-label="Open Settings Config">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
 
-  <!-- Filter Configuration Real-time Modal Panel -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-      <button class="modal-close-area" id="modalCloseBtn">&times;</button>
-      <h3>Configuration Toggles</h3>
-      
-      <div class="checkbox-item">
-        <input type="checkbox" id="caseToggle">
-        <label for="caseToggle">Case Sensitive Match</label>
-      </div>
-      <div class="checkbox-item">
-        <input type="checkbox" id="filterToggle">
-        <label for="filterToggle">Custom Filter</label>
-      </div>
-      <div class="checkbox-item">
-        <input type="checkbox" id="predefinedToggle">
-        <label for="predefinedToggle">Predefined Filter</label>
-      </div>
-    </div>
-  </div>
+        <!-- Main Processor Grid Layout -->
+        <main class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            
+            <!-- Column 1: Input Field (50% Desktop Width / Spans 2 Columns) -->
+            <section class="lg:col-span-2 flex flex-col space-y-2">
+                <label for="textInput" class="font-semibold text-gray-700">Input Field (50%)</label>
+                <textarea id="textInput" class="w-full h-96 p-3 font-mono text-sm bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all shadow-inner resize-y" placeholder="Paste or type text here..."></textarea>
+                <div id="inputStats" class="text-xs font-medium text-gray-400">Words: 0</div>
+            </section>
 
-  <div class="grid">
-    <div class="column-box">
-      <label for="textInput">Paste Words</label>
-      <textarea id="textInput" rows="20" placeholder="Paste or type text here..."></textarea>
-      <div id="inputStats" class="stats">Total Words: 0</div>
-    </div>
-    
-    <div class="column-box">
-      <label for="filterInput">Word Filter</label>
-      <textarea id="filterInput" rows="20" placeholder="One word&#10;per line..."></textarea>
-      <div id="filterStats" class="stats">Custom Filtered: 0</div>
-    </div>
-    
-    <div class="column-box">
-      <label for="textOutput">Unique Words</label>
-      <textarea id="textOutput" rows="20" readonly placeholder="Cleaned text..."></textarea>
-      <button class="copy-btn" id="copyBtn">Copy</button>
-      <div id="outputStats" class="stats">Unique Words: 0</div>
-    </div>
-  </div>
-</div>
+            <!-- Column 2: Stop-Words (25% Desktop Width / Spans 1 Column) -->
+            <section class="flex flex-col space-y-2">
+                <label for="filterInput" class="font-semibold text-gray-700">Stop-Words (25%)</label>
+                <textarea id="filterInput" class="w-full h-96 p-3 font-mono text-sm bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all shadow-inner resize-y" placeholder="Enter stop words (one per line)..."></textarea>
+                <div id="filterStats" class="text-xs font-medium text-gray-400">Custom Filtered: 0</div>
+            </section>
 
-<script src="js/main.js"></script>
+            <!-- Column 3: Output (25% Desktop Width / Spans 1 Column) -->
+            <section class="flex flex-col space-y-2">
+                <div class="flex items-center justify-between">
+                    <label for="textOutput" class="font-semibold text-gray-700">Output (25%)</label>
+                    <button id="copyBtn" class="px-2.5 py-1 text-xs font-medium bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 rounded-md shadow-sm transition-colors active:bg-gray-100">Copy</button>
+                </div>
+                <textarea id="textOutput" readonly class="w-full h-96 p-3 font-mono text-sm bg-gray-50 border border-gray-300 rounded-lg shadow-inner resize-y text-gray-600 cursor-not-allowed" placeholder="Processed unique words..."></textarea>
+                <div id="outputStats" class="text-xs font-medium text-gray-400">Unique Words: 0</div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Layout Configuration Modal Overlay -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 animate-fade-in">
+        <div class="bg-white w-full max-w-md rounded-xl shadow-xl border border-gray-200 p-6 flex flex-col space-y-5">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                <h3 class="text-lg font-bold text-gray-900">Configuration Options</h3>
+                <button id="modalCloseBtn" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            </div>
+            
+            <!-- Toggles Context -->
+            <div class="flex flex-col space-y-4">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" id="caseToggle" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <span class="text-sm font-medium text-gray-700">Case Sensitive Match</span>
+                </label>
+                
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" id="predefinedToggle" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <span class="text-sm font-medium text-gray-700">Enable Predefined Stop-Word Filter</span>
+                </label>
+            </div>
+
+            <div class="border-t border-gray-100 pt-4 flex justify-between items-center">
+                <button id="clearStorageBtn" class="px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">Clear App Storage Memory</button>
+                <button onclick="document.getElementById('modalOverlay').style.display='none'" class="px-4 py-2 text-sm bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Your external separated JavaScript logic remains untouched -->
+    <script src="js/app.js"></script>
+
 </body>
 </html>
